@@ -14,7 +14,6 @@ const DashboardPage = ({ currentUser, onLogout }) => {
   const [showAddFolderModal, setShowAddFolderModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
   const [activeFolderId, setActiveFolderId] = useState(null);
-  // showProfileModal, newUserName, newUserPhoto states dihapus karena tidak ada fitur edit profil
 
 
   useEffect(() => {
@@ -112,8 +111,6 @@ const DashboardPage = ({ currentUser, onLogout }) => {
     }
   };
 
-  // handleProfileUpdate dan handlePhotoUpload functions dihapus
-
 
   const filteredAndSortedDocuments = documents
     .filter(doc => {
@@ -180,31 +177,29 @@ const DashboardPage = ({ currentUser, onLogout }) => {
         <nav className="flex-grow">
           <ul>
             <li className="mb-2">
-              <a
-                href="#"
-                className={`flex items-center p-2 rounded-md hover:bg-gray-700 ${activeFilter === 'Semua' && activeFolderId === null ? 'bg-gray-700 font-semibold' : ''}`}
+              {/* Mengubah <a> menjadi <button> untuk aksi non-navigasi */}
+              <button
+                className={`flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left ${activeFilter === 'Semua' && activeFolderId === null ? 'bg-gray-700 font-semibold' : ''}`}
                 onClick={() => { setActiveFilter('Semua'); setActiveFolderId(null); }}
               >
                 <span className="mr-2">🏠</span> Dashboard
-              </a>
+              </button>
             </li>
             <li className="mb-2">
-              <a
-                href="#"
-                className={`flex items-center p-2 rounded-md hover:bg-gray-700 ${activeFilter === 'Favorit' ? 'bg-gray-700 font-semibold' : ''}`}
+              <button
+                className={`flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left ${activeFilter === 'Favorit' ? 'bg-gray-700 font-semibold' : ''}`}
                 onClick={() => { setActiveFilter('Favorit'); setActiveFolderId(null); }}
               >
                 <span className="mr-2">⭐</span> Favorit
-              </a>
+              </button>
             </li>
             <li className="mb-2">
-              <a
-                href="#"
-                className={`flex items-center p-2 rounded-md hover:bg-gray-700 ${activeFilter === 'Terbaru' ? 'bg-gray-700 font-semibold' : ''}`}
+              <button
+                className={`flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left ${activeFilter === 'Terbaru' ? 'bg-gray-700 font-semibold' : ''}`}
                 onClick={() => { setActiveFilter('Terbaru'); setActiveFolderId(null); }}
               >
                 <span className="mr-2">⏳</span> Terbaru
-              </a>
+              </button>
             </li>
           </ul>
 
@@ -218,13 +213,12 @@ const DashboardPage = ({ currentUser, onLogout }) => {
             <ul>
               {folders.map(folder => (
                 <li key={folder.id} className="mb-1">
-                  <a
-                    href="#"
-                    className={`flex items-center p-2 rounded-md text-sm hover:bg-gray-700 ${activeFolderId === folder.id ? 'bg-gray-700 font-semibold' : ''}`}
+                  <button
+                    className={`flex items-center p-2 rounded-md text-sm hover:bg-gray-700 w-full text-left ${activeFolderId === folder.id ? 'bg-gray-700 font-semibold' : ''}`}
                     onClick={() => { setActiveFilter('Semua'); setActiveFolderId(folder.id); }}
                   >
                     <span className="mr-2">📁</span> {folder.name}
-                  </a>
+                  </button>
                 </li>
               ))}
               {folders.length === 0 && (
@@ -249,7 +243,6 @@ const DashboardPage = ({ currentUser, onLogout }) => {
               {/* Menampilkan email */}
               <div className="text-sm text-gray-400">{currentUser?.email || 'N/A'}</div>
             </div>
-            {/* Tombol Logout - Dihapus dari sini, dipindahkan ke header */}
           </div>
         </div>
       </aside>
