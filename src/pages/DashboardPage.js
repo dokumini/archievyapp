@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   getDocuments, addDocument, updateDocument, deleteDocument,
-  getFolders, addFolder, // updateUserProfile dihapus dari import
+  getFolders, addFolder,
 } from '../services/indexedDbService';
 
 const DashboardPage = ({ currentUser, onLogout }) => {
@@ -123,7 +123,8 @@ const DashboardPage = ({ currentUser, onLogout }) => {
       const matchesSearch = doc.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter =
         activeFilter === 'Semua' ||
-        (activeFilter === 'Favorit' && doc.favorite);
+        (activeFilter === 'Favorit' && doc.favorite) ||
+        activeFilter === 'Terbaru'; // <--- PERBAIKAN DI SINI: Termasuk 'Terbaru' di filter
       return matchesSearch && matchesFilter;
     })
     .sort((a, b) => {
@@ -177,7 +178,6 @@ const DashboardPage = ({ currentUser, onLogout }) => {
         <nav className="flex-grow">
           <ul>
             <li className="mb-2">
-              {/* Mengubah <a> menjadi <button> untuk aksi non-navigasi */}
               <button
                 className={`flex items-center p-2 rounded-md hover:bg-gray-700 w-full text-left ${activeFilter === 'Semua' && activeFolderId === null ? 'bg-gray-700 font-semibold' : ''}`}
                 onClick={() => { setActiveFilter('Semua'); setActiveFolderId(null); }}
@@ -235,12 +235,9 @@ const DashboardPage = ({ currentUser, onLogout }) => {
         {/* Bagian Profil Pengguna - hanya menampilkan, tanpa edit */}
         <div className="mt-auto pt-4 border-t border-gray-700">
           <div className="flex items-center p-2">
-            {/* Menggunakan currentUser?.photo jika ada, fallback ke placeholder */}
             <img src={currentUser?.photo || 'https://placehold.co/40x40/cccccc/ffffff?text=User'} alt="User Avatar" className="w-10 h-10 rounded-full mr-3 object-cover" />
             <div>
-              {/* Menampilkan nama pengguna atau bagian email sebelum '@' */}
               <div className="font-semibold text-gray-100">{currentUser?.name || currentUser?.email.split('@')[0] || 'Pengguna'}</div>
-              {/* Menampilkan email */}
               <div className="text-sm text-gray-400">{currentUser?.email || 'N/A'}</div>
             </div>
           </div>
